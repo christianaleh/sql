@@ -1,0 +1,9 @@
+----- KIV 
+
+SELECT  N,
+CASE WHEN P is null then 'root'
+        WHEN  (select count(*) from BST where P = b,N ) > 0 then 'inner' 
+        else 'leaf' 
+end
+from BST as b 
+order by N
