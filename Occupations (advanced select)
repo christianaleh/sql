@@ -1,0 +1,15 @@
+--- Create table which orders the table in the form of 1. Row number (according to names and occupation), 2. Name and 3. Occupation 
+---- select from table the non-null  names using Min
+---- Group by the row number to ensure that it doesnt sort continuously based on previous column
+
+select 
+    min(if(Occupation = 'Doctor', Name, NULL)),
+    min(if(Occupation = 'Professor', Name, NULL)),
+    min(if(Occupation = 'Singer', Name, NULL)),
+    min(if(Occupation = 'Actor', Name, NULL))
+from (
+    select row_number() over (partition by occupation order by Name) as row_num, 
+    Name, 
+    Occupation
+    from occupations) as o
+group by row_num
