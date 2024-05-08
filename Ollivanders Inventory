@@ -1,0 +1,10 @@
+
+# Answer using MS SQL Server 
+
+select t.id, t.age, t.coins_needed, t.power 
+from (select w.id, p.age, w.coins_needed, w.power, min(w.coins_needed) over (partition by w.code, w.power ) as min_coins
+from wands w 
+left join wands_property p on w.code = p.code 
+where p.is_evil = 0) t 
+where t.coins_needed = t.min_coins 
+order by t.power desc, t.age desc
